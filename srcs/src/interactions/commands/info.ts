@@ -19,7 +19,7 @@ class Info {
 			.setThumbnail(client.user?.avatarURL() || null)
 			.setTitle("La Liste Déchaînée")
 			.setDescription("La Liste Déchaînée a le plaisir de se présenter à vous en tant que BDE de l'école 42 Paris. Animations, événements et bonne ambiance sont nos objectifs.")
-			.addFields({name: "Source code", value: "https://github.com/shocquen/lld_bot_discord"});
+			.addFields({name: "Source code", value: "https://github.com/BDE-LLD/lld_discord_bot_ts"});
         const guild = await client.guilds.fetch(guild_id);
 		await guild.members.fetch();
 		const bde = await guild.roles.fetch(roles.bde);
