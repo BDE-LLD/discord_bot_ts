@@ -32,7 +32,6 @@ export function initAuth(discordUserId: string) {
 	const code = generateUniqueCode();
 	db.push({ code: code, id: discordUserId });
 	writeDB("./src/auth/users.json", db);
-	//const url = "https://auth.bde42.me?user_code=" + code;
-    const url = "http://localhost:3333?user_code=" + code;
+	const url = "https://auth.bde42.me?user_code=" + code;
 	return url;
 }
