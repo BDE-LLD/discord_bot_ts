@@ -9,24 +9,28 @@
 			"pisciner": "1020617168578166804",
 			"extern": "1020617196130537492"
 		},
-		"coalitions": {
-			"the-order": {
+		"coalitions": [
+			{
+				"coa_id": 47,
 				"role": "1020617830959427655",
 				"emoji": "🟠"
 			},
-			"the-alliance": {
+			{
+				"coa_id": 46,
 				"role": "1020617884021575732",
 				"emoji": "🟢"
 			},
-			"the-federation": {
+			{
+				"coa_id": 45,
 				"role": "1020617858914459670",
 				"emoji": "🔵"
 			},
-			"the-assembly": {
+			{
+				"coa_id": 48,
 				"role": "1020617904649150495",
 				"emoji": "🟣"
 			}
-		}
+		]
 	},
 	"auto_reac": {
 		"disabled_channels": [

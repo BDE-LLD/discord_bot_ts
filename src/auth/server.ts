@@ -7,6 +7,8 @@ import axios from "axios";
 import http from "http";
 import { readDB } from "./auth_manager";
 import { guild_id, auth } from "../config.json";
+import { IUser } from "42.js/dist/structures/user";
+import { Client as Client42} from "42.js";
 
 async function getUserInformations(token: string, user_res: any, user_code: string, client: Client) {
 	const config = {
@@ -32,20 +34,40 @@ async function getUserInformations(token: string, user_res: any, user_code: stri
 		});
 }
 
-async function validateAuth(discordUserId: string, user: any, client: Client) {
+async function validateAuth(discordUserId: string, user: IUser, client: Client) {
 	const guild = await client.guilds.fetch(guild_id);
 	const member = await guild.members.fetch(discordUserId);
 
 	const bocal = user["staff?"];
 	const tuteur = user.groups.find((g: any) => g.id == 40);
+	const stud = user.achievements.find((a: any) => a.id == 1);
+
+	const client42 = new Client42(
+		<string>process.env.CLIENT_ID,
+		<string>process.env.CLIENT_SECRET
+	);
+	const coalitions: any[] = await client42.fetch("users/" + user.id + "/coalitions_users?");
+	let nickname = `${user.usual_first_name || user.first_name} (${user.login})`;
+	let coa = null;
+	for(const c of coalitions) {
+		for(const co of auth.coalitions) {
+			if(c.coalition_id == co.coa_id) {
+				coa = co;
+				break;
+			}
+		}
+	}
+	if(coa)
+		nickname += ` ${coa.emoji}`;
 
 	try {
-		await member.setNickname(
-			`${user.usual_first_name || user.first_name} (${user.login})`
-		);
+		await member.setNickname(nickname);
 		if (bocal) await member.roles.add(auth.roles.staff);
 		if (tuteur) await member.roles.add(auth.roles.tutor);
-		await member.roles.add("954063445634985984");
+		if (stud || tuteur || bocal) await member.roles.add(auth.roles.student);
+		else await member.roles.add(auth.roles.pisciner);
+		if(coa)
+			await member.roles.add(coa.role);
 		console.log(`${user.login} is set up`);
 	} catch (err) {
 		console.error(err);
