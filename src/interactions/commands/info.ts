@@ -29,7 +29,7 @@ class Info {
             embed.addFields([
                 {
                     name: "Guide suprême",
-                    value: pre.members.map((m) => m.user.username).join("\n"),
+                    value: pre.members.map((m) => m.nickname || m.user.username).join("\n"),
                     inline: true,
                 },
             ]);
@@ -38,7 +38,7 @@ class Info {
             embed.addFields([
                 {
                     name: "Conseil d'administration",
-                    value: ca.members.map((m) => m.user.username).join("\n"),
+                    value: ca.members.map((m) => m.nickname || m.user.username).join("\n"),
                     inline: true,
                 },
             ]);
@@ -47,7 +47,7 @@ class Info {
             embed.addFields([
                 {
                     name: "Membres",
-                    value: bde.members.map((m) => m.user.username).join("\n"),
+                    value: bde.members.map((m) => m.nickname || m.user.username).join("\n"),
                     inline: true,
                 },
             ]);
