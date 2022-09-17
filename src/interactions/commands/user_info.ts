@@ -30,7 +30,7 @@ class UserInfo {
                 const coalition: any = coa.find((c: any) => [45, 46, 47, 48].includes(c.id));
                 const primary_campus: any = user.campus_users.filter((camp: any) => camp.is_primary)[0];
                 const campus: any = user.campus.filter((camp: any) => camp.id === primary_campus.campus_id)[0];
-                const embed = new EmbedBuilder().setColor(coalition.color || "RANDOM");
+                const embed = new EmbedBuilder().setColor(coalition.color || "#000000");
 				embed
 					.setAuthor({
 						name: user.login,
