@@ -89,7 +89,7 @@ export function startApp(client: Client) {
 				);
 		else
 			res.redirect(
-				"https://api.intra.42.fr/oauth/authorize?client_id=" + process.env.DISCORD_BOT_CLIENT_ID + "&redirect_uri=https%3A%2F%2Fauth.bde42.me%2F42result?user_code=" +
+				"https://api.intra.42.fr/oauth/authorize?client_id=" + process.env.DISCORD_BOT_42_API_CLIENT_ID + "&redirect_uri=https%3A%2F%2Fauth.bde42.me%2F42result?user_code=" +
 					user_code +
 					"&response_type=code"
 			);
