@@ -1,7 +1,7 @@
 import { ButtonInteraction, EmbedBuilder } from "discord.js";
 import { ButtonComponent, Discord } from "discordx";
 
-import { initAuth } from "../../auth/authManager";
+import { initAuth } from "../../auth/auth_manager";
 
 @Discord()
 class AuthButton {

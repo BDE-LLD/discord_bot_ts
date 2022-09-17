@@ -1,7 +1,7 @@
 const { readFileSync, writeFileSync } = require("node:fs");
 import * as auth_list from "./users.json";
 
-function readDB(path: string) {
+export function readDB(path: string) {
     try {
         const db = readFileSync(path);
         return JSON.parse(db);
@@ -10,7 +10,7 @@ function readDB(path: string) {
         return undefined;
     }
 }
-function writeDB(path: string, data: string) {
+export function writeDB(path: string, data: string) {
     try {
         writeFileSync(path, JSON.stringify(data));
     } catch (err) {

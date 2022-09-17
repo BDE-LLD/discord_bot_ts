@@ -6,6 +6,9 @@ import { guild_id } from "./config.json";
 import { init as initEvents } from "./events/events_manager";
 import { init as initInteractions } from "./interactions/interactions_manager";
 import { create_buttons } from "./create_buttons";
+import { startApp } from "./auth/server";
+import express from "express"; 
+import http from "http";
 
 const token = process.env.DISCORD_TOKEN;
 
@@ -29,6 +32,11 @@ async function start() {
     client.executeInteraction(interaction);
   });
 
+  const httpServer = startApp(client);
   await client.login(token || "");
+  const port = 3333;
+  httpServer.listen(port, () => {
+    console.log("Auth server running on port " + port);
+  });
 }
 start();
