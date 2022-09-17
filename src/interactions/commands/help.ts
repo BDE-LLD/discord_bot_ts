@@ -5,7 +5,7 @@ import { Client, Discord, Slash } from "discordx";
 class Help {
     @Slash({
         name: "help",
-        description: "List all caomnds and give informations about",
+        description: "List all comnmands and give informations about",
     })
     async help(interaction: CommandInteraction, client: Client) {
         let embed = new EmbedBuilder();
