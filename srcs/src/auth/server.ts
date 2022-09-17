@@ -43,8 +43,8 @@ async function validateAuth(discordUserId: string, user: IUser, client: Client) 
 	const stud = user.achievements.find((a: any) => a.id == 1);
 
 	const client42 = new Client42(
-		<string>process.env.CLIENT_ID,
-		<string>process.env.CLIENT_SECRET
+		<string>process.env.DISCORD_BOT_42_API_CLIENT_ID,
+		<string>process.env.DISCORD_BOT_42_API_CLIENT_SECRET
 	);
 	const coalitions: any[] = await client42.fetch("users/" + user.id + "/coalitions_users?");
 	let nickname = `${user.usual_first_name || user.first_name} (${user.login})`;
@@ -89,7 +89,7 @@ export function startApp(client: Client) {
 				);
 		else
 			res.redirect(
-				"https://api.intra.42.fr/oauth/authorize?client_id=f0668809d011ebcedaddc38e592ab733fe980b2a68fe0a9daaebb1d532f250db&redirect_uri=http%3A%2F%2Flocalhost:3333%2F42result?user_code=" +
+				"https://api.intra.42.fr/oauth/authorize?client_id=" + process.env.DISCORD_BOT_CLIENT_ID + "&redirect_uri=https%3A%2F%2Fauth.bde42.me%2F42result?user_code=" +
 					user_code +
 					"&response_type=code"
 			);
@@ -116,11 +116,11 @@ export function startApp(client: Client) {
 					);
 			const params = {
 				grant_type: "authorization_code",
-				client_id: process.env.CLIENT_ID,
-				client_secret: process.env.CLIENT_SECRET,
+				client_id: process.env.DISCORD_BOT_42_API_CLIENT_ID,
+				client_secret: process.env.DISCORD_BOT_42_API_CLIENT_SECRET,
 				code: code,
 				redirect_uri:
-					"http://localhost:3333/42result?user_code=" + user_code,
+					"https://auth.bde42.me/42result?user_code=" + user_code,
 			};
 			axios
 				.post("https://api.intra.42.fr/oauth/token", params)

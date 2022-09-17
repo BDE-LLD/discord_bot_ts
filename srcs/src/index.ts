@@ -10,7 +10,7 @@ import { startApp } from "./auth/server";
 import express from "express"; 
 import http from "http";
 
-const token = process.env.DISCORD_TOKEN;
+const token = process.env.DISCORD_BOT_TOKEN;
 
 async function start() {
   const client = new Client({

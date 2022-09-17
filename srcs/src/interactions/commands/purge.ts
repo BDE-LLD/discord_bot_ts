@@ -17,8 +17,8 @@ class Purge {
         const pisciners = await guild.roles.fetch(auth.roles.pisciner);
         interaction.editReply({content: `Cleaning ${(students?.members?.size || 0) + (pisciners?.members?.size || 0)} users...`});
         const client42 = new Client42(
-            <string>process.env.CLIENT_ID,
-            <string>process.env.CLIENT_SECRET
+            <string>process.env.DISCORD_BOT_42_API_CLIENT_ID,
+            <string>process.env.DISCORD_BOT_42_API_CLIENT_SECRET
         );
         let remove_pisciners = 0;
         let remove_students = 0;

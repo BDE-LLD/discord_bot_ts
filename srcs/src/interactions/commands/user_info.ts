@@ -21,8 +21,8 @@ class UserInfo {
         ) {
             interaction.reply("Waiting...");
             const client42 = new Client42(
-                <string>process.env.CLIENT_ID,
-                <string>process.env.CLIENT_SECRET
+                <string>process.env.DISCORD_BOT_42_API_CLIENT_ID,
+                <string>process.env.DISCORD_BOT_42_API_CLIENT_SECRET
             );
             const user: IUser | null = await client42.users.get(login);
             if(user) {
