@@ -74,7 +74,7 @@ class Purge {
             for(const user of students?.members) {
                 const name = user[1].nickname || user[1].user.username;
                 const login = name.match(/ \((.*)\)/);
-                const bde = user[1].roles.cache.find((role) => role.id === roles.bde);
+                const bde = user[1].roles.cache.find((role) => role.id === roles.bde) || user[1].roles.cache.find((role) => role.id === auth.roles.staff);
                 if(login && login.length > 0)
                 {           
                     const user42 = await client42.users.get(login[1]);
@@ -111,7 +111,7 @@ class Purge {
                         continue;
                     }
                     for(const coa of auth.coalitions) {
-                        if(user[1].roles.cache.find((role) => role.id == coa.role))
+                        if(user[1].roles.cache.find((role) => role.id == coa.role) && !bde)
                         {
                             await user[1].roles.add(coa.role);
                             let theoric_name = `${user42.usual_first_name || user42.first_name} (${user42.login}) ${coa.emoji}`;
@@ -120,6 +120,16 @@ class Purge {
                                 await user[1].setNickname(theoric_name);
                             }
                         }
+                    }
+                }
+                else
+                {
+                    if(!bde)
+                    {
+                        await user[1].roles.remove(auth.roles.student);
+                        await user[1].roles.add(auth.roles.extern);
+                        remove_students++;
+                        continue;
                     }
                 }
             }
