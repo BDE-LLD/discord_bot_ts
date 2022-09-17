@@ -25,15 +25,6 @@ class Info {
 		const bde = await guild.roles.fetch(roles.bde);
 		const pre = await guild.roles.fetch(roles.president);
 		const ca = await guild.roles.fetch(roles.ca);
-        if(bde) {
-            embed.addFields([
-                {
-                    name: "Membres",
-                    value: bde.members.map((m) => m.user.username).join("\n"),
-                    inline: true,
-                },
-            ]);
-        }
         if(pre) {
             embed.addFields([
                 {
@@ -48,6 +39,15 @@ class Info {
                 {
                     name: "Conseil d'administration",
                     value: ca.members.map((m) => m.user.username).join("\n"),
+                    inline: true,
+                },
+            ]);
+        }
+        if(bde) {
+            embed.addFields([
+                {
+                    name: "Membres",
+                    value: bde.members.map((m) => m.user.username).join("\n"),
                     inline: true,
                 },
             ]);
