@@ -23,7 +23,7 @@ async function start() {
     console.log("Created buttons");
     await initEvents();
     console.log("Inited events");
-    await initInteractions();
+    await initInteractions(client);
     console.log("Inited interactions");
     console.log(client.user?.username + " is ready!");
   });
