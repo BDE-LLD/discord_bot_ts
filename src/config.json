@@ -1,0 +1,55 @@
+{
+	"guild_id": "609372006827294720",
+	"auto_reac": {
+		"disabled_channels": [
+			"609372145965072394"
+		],
+		"reactions": [
+			{
+				"emoji_type": "custom",
+				"emoji": "abeer",
+				"triggered_by_mention": false,
+				"keywords": [
+					"beer",
+					"ipa",
+					"pils",
+					"bière",
+					"ale",
+					"bibine",
+					"boîte",
+					"bock",
+					"boisson",
+					"caisse",
+					"cénotaphe",
+					"cervoise",
+					"chope",
+					"faro",
+					"ginger",
+					"gueuze",
+					"guinness",
+					"kriek",
+					"lambic",
+					"litre",
+					"pale-ale",
+					"porter",
+					"saké",
+					"sépulcre",
+					"sarcophage",
+					"stout",
+					"phéno",
+					"pheno",
+					"phénos",
+					"phenos"
+				]
+			},
+			{
+				"emoji_type": "custom",
+				"emoji": "alld",
+				"triggered_by_mention": true,
+				"keywords": [
+					"lld"
+				]
+			}
+		]
+	}
+}

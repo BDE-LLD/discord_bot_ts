@@ -1,0 +1,23 @@
+{
+	"name": "lld_discord_bot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"start": "node .",
+		"test": "tsc && node ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"discord.js": "^14.2.0",
+		"discordx": "^11.1.9",
+		"dotenv": "^16.0.1",
+		"reflect-metadata": "^0.1.13"
+	},
+	"devDependencies": {
+		"tslib": "^2.4.0"
+	}
+}
