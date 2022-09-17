@@ -4,6 +4,8 @@ import { GatewayIntentBits } from "discord.js";
 import { Client } from "discordx";
 import { guild_id } from "./config.json";
 import { init as initEvents } from "./events/events_manager";
+import { init as initInteractions } from "./interactions/interactions_manager";
+import { create_buttons } from "./create_buttons";
 
 const token = process.env.DISCORD_TOKEN;
 
@@ -14,7 +16,10 @@ async function start() {
   });
 
   client.once("ready", async () => {
+    await create_buttons(client);
+    console.log("Created buttons");
     await initEvents();
+    await initInteractions();
     console.log(client.user?.username + " is ready!");
   });
 
