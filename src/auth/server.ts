@@ -6,7 +6,7 @@ import express from "express";
 import axios from "axios";
 import http from "http";
 import { readDB } from "./auth_manager";
-import { guild_id } from "../config.json";
+import { guild_id, auth } from "../config.json";
 
 async function getUserInformations(token: string, user_res: any, user_code: string, client: Client) {
 	const config = {
@@ -17,10 +17,10 @@ async function getUserInformations(token: string, user_res: any, user_code: stri
 	axios
 		.get("https://api.intra.42.fr/v2/me", config)
 		.then(async (res: any) => {
-			//const db = readDB("./src/auth/users.json");
+			const db = readDB("./src/auth/users.json");
 			console.log(res.data.login + " logged !");
-			//const found = db.find((o: any) => o.code === user_code);
-			//validateAuth(found.id, res.data, client);
+			const found = db.find((o: any) => o.code === user_code);
+			validateAuth(found.id, res.data, client);
 			user_res.status(200).send("Bienvenue " + res.data.login + "!");
 		})
 		.catch((err: any) => {
@@ -43,8 +43,8 @@ async function validateAuth(discordUserId: string, user: any, client: Client) {
 		await member.setNickname(
 			`${user.usual_first_name || user.first_name} (${user.login})`
 		);
-		if (bocal) await member.roles.add("960464782132142151");
-		if (tuteur) await member.roles.add("960464388177940540");
+		if (bocal) await member.roles.add(auth.roles.staff);
+		if (tuteur) await member.roles.add(auth.roles.tutor);
 		await member.roles.add("954063445634985984");
 		console.log(`${user.login} is set up`);
 	} catch (err) {
