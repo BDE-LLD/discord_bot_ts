@@ -110,15 +110,24 @@ class Purge {
                         remove_students++;
                         continue;
                     }
-                    for(const coa of auth.coalitions) {
-                        if(user[1].roles.cache.find((role) => role.id == coa.role) && !bde)
-                        {
-                            await user[1].roles.add(coa.role);
-                            let theoric_name = `${user42.usual_first_name || user42.first_name} (${user42.login}) ${coa.emoji}`;
-                            if(name != theoric_name)
-                            {
-                                await user[1].setNickname(theoric_name);
+                    const coalitions: any[] = await client42.fetch("users/" + user42.id + "/coalitions_users?");
+                    let coa: any = null;
+                    for(const c of coalitions) {
+                        for(const co of auth.coalitions) {
+                            if(c.coalition_id == co.coa_id) {
+                                coa = co;
+                                break;
                             }
+                        }
+                    }
+                    if(coa)
+                    {
+                        if(!user[1].roles.cache.find((role) => role.id === coa.role))
+                            await user[1].roles.add(coa.role);
+                        let theoric_name = `${user42.usual_first_name || user42.first_name} (${user42.login}) ${coa.emoji}`;
+                        if(name != theoric_name)
+                        {
+                            await user[1].setNickname(theoric_name);
                         }
                     }
                 }
