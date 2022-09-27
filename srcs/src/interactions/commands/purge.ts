@@ -90,7 +90,7 @@ class Purge {
                         continue;
                     }
                     const cursus = user42.cursus_users.find((cursus) => cursus.cursus_id == 21);
-                    if(!cursus && bde)
+                    if((!cursus && bde) || user42.cursus_users.find((cursus) => cursus.cursus_id == 1))
                     {
                         continue;
                     }
@@ -125,7 +125,7 @@ class Purge {
                         if(!user[1].roles.cache.find((role) => role.id === coa.role))
                             await user[1].roles.add(coa.role);
                         let theoric_name = `${user42.usual_first_name || user42.first_name} (${user42.login}) ${coa.emoji}`;
-                        if(name != theoric_name)
+                        if(name != theoric_name && !bde)
                         {
                             await user[1].setNickname(theoric_name);
                         }
