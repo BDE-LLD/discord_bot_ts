@@ -25,7 +25,7 @@ class Purge {
         if(pisciners?.members)
         {
             for(const user of pisciners?.members) {
-                if(user[1].roles.cache.find((role) => role.id === roles.bde))
+                if(user[1].roles.cache.find((role) => role.id === roles.bde || user[1].user.bot))
                 {
                     continue;
                 }
@@ -78,7 +78,7 @@ class Purge {
                 if(login && login.length > 0)
                 {           
                     const user42 = await client42.users.get(login[1]);
-                    if(!user42 && bde)
+                    if((!user42 && bde) || user[1].user.bot)
                     {
                         continue;
                     }
@@ -103,7 +103,7 @@ class Purge {
                     }
                     const today = new Date();
                     const end = new Date(cursus.blackholed_at);
-                    if(today > end && !bde)
+                    if((today > end && cursus.blackholed_at != null) && !bde)
                     {
                         await user[1].roles.remove(auth.roles.student);
                         await user[1].roles.add(auth.roles.extern);
