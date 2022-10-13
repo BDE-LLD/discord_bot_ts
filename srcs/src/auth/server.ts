@@ -150,7 +150,7 @@ export function startApp(client: Client) {
 		}
 	});
 
-	app.get("discord-auth", async (req: any, res: any) => {
+	app.get("discord", async (req: any, res: any) => {
 		console.log(req);
 
 		// const guild = await client.guilds.fetch(guild_id);
