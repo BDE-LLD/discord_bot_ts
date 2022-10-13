@@ -7,7 +7,7 @@ import axios from "axios";
 import http from "http";
 import url from "url";
 import { readDB } from "./auth_manager";
-import { guild_id, auth } from "../config.json";
+import { guild_id, auth, roles } from "../config.json";
 import { IUser } from "42.js/dist/structures/user";
 import { Client as Client42 } from "42.js";
 
@@ -162,13 +162,16 @@ export function startApp(client: Client) {
 			"redirect_uri",
 			"https://auth." + process.env.DOMAIN + "/discord"
 		);
-		axios
-			.post("https://discord.com/api/oauth2/token", params, {
+		let res_auth = await axios.post(
+			"https://discord.com/api/oauth2/token",
+			params,
+			{
 				headers: {
 					"Content-Type": "application/x-www-form-urlencoded",
 				},
-			})
-			.then(async (result: any) => {
+			}
+		);
+		/* .then(async (result: any) => {
 				console.log(result.data);
 				const user = await axios.get("https://discord.com/api/users/@me", {
 					headers: {
@@ -183,12 +186,38 @@ export function startApp(client: Client) {
 				res.status(200).send("Works !");
 			})
 			.catch((err: any) => {
-				console.error("Impossible to transform user's code into token:");
+				console.error("Oops, something went wrong:");
 				console.log(err);
 				return res
 					.status(400)
 					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
+			}); */
+		try {
+			console.log(res_auth.data);
+			const user = await axios.get("https://discord.com/api/users/@me", {
+				headers: {
+					Authorization: `Bearer ${res_auth.data.access_token}`,
+				},
 			});
+			console.log(user.data);
+			const guild = await client.guilds.fetch(guild_id);
+			let member = await guild.members.fetch(user.data.id);
+			if (!member) {
+				await guild.members.add(user.data.id, {
+					accessToken: res_auth.data.access_token,
+					roles: [roles.hackathon],
+				});
+			} else {
+				await member.roles.add(roles.hackathon);
+			}
+			res.status(200).send("Works !");
+		} catch (err: any) {
+			console.error("Oops, something went wrong:");
+			console.error(err);
+			return res
+				.status(400)
+				.send("Désolé, nous n'avons pas pu récupérer tes informations !");
+		}
 	});
 	const httpServer = http.createServer(app);
 	return httpServer;

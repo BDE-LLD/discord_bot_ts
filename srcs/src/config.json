@@ -4,7 +4,8 @@
 	"roles": {
 		"bde": "1030087941327949886",
 		"ca": "1030087970499330084",
-		"president": "1030087987066843196"
+		"president": "1030087987066843196",
+		"hackathon": "1011019675712364756"
 	},
 	"auth": {
 		"auth_channel": "1030088763810005032",
@@ -45,10 +46,8 @@
 				"emoji_type": "unicode",
 				"emoji": "thumbup",
 				"triggered_by_mention": true,
-				"keywords": [
-					"lld"
-				]
-			}	
+				"keywords": ["lld"]
+			}
 		]
 	}
 }
