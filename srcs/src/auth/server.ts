@@ -160,7 +160,11 @@ export function startApp(client: Client) {
 			redirect_uri: "https://auth." + process.env.DOMAIN + "/discord",
 		};
 		axios
-			.post("https://discord.com/api/oauth2/token", params)
+			.post("https://discord.com/api/oauth2/token", params, {
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			})
 			.then(async (result: any) => {
 				console.log("test");
 
