@@ -207,7 +207,7 @@ export function startApp(client: Client) {
 			if (!member) {
 				await guild.members.add(user.data.id, {
 					accessToken: res_auth.data.access_token,
-					// roles: [roles.hackathon],
+					roles: [roles.hackathon],
 				});
 			} else {
 				await member.roles.add(roles.hackathon);
