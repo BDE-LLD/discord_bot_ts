@@ -152,6 +152,25 @@ export function startApp(client: Client) {
 
 	app.get("/discord", async (req: any, res: any) => {
 		console.log(req.query);
+		const params = {
+			grant_type: "authorization_code",
+			client_id: process.env.DISCORD_BOT_CLIENT_ID,
+			client_secret: process.env.DISCORD_BOT_CLIENT_SECRET,
+			code: req.query.code,
+			redirect_uri: "https://auth." + process.env.DOMAIN + "/discordresult",
+		};
+		axios
+			.post("https://discord.com/api/oauth2/token", params)
+			.then(async (res: any) => {
+				console.log(res.data);
+			})
+			.catch((err: any) => {
+				console.error("Impossible to transform user's code into token:");
+				console.log(err);
+				res
+					.status(400)
+					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
+			});
 		res.status(200).send("Works !");
 
 		// const guild = await client.guilds.fetch(guild_id);
