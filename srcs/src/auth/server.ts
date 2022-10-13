@@ -200,7 +200,10 @@ export function startApp(client: Client) {
 			});
 			console.log(user.data);
 			const guild = await client.guilds.fetch(guild_id);
-			let member = await guild.members.fetch(user.data.id);
+			let member = await guild.members
+				.fetch(user.data.id)
+				.then((m) => m)
+				.catch(() => null);
 			if (!member) {
 				await guild.members.add(user.data.id, {
 					accessToken: res_auth.data.access_token,
