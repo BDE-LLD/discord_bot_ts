@@ -162,6 +162,8 @@ export function startApp(client: Client) {
 		axios
 			.post("https://discord.com/api/oauth2/token", params)
 			.then(async (result: any) => {
+				console.log("test");
+
 				console.log(result.data);
 			})
 			.catch((err: any) => {
