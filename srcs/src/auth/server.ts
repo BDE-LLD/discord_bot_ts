@@ -162,12 +162,12 @@ export function startApp(client: Client) {
 		axios
 			.post("https://discord.com/api/oauth2/token", params)
 			.then(async (res: any) => {
-				console.log(res.data);
+				console.log(res);
 			})
 			.catch((err: any) => {
 				console.error("Impossible to transform user's code into token:");
 				console.log(err);
-				res
+				return res
 					.status(400)
 					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
 			});
