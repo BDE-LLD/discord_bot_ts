@@ -151,6 +151,9 @@ export function startApp(client: Client) {
 		}
 	});
 
+	/**
+	 * Use oauth2 of Discord to get a user, join it to the server and / or set up its roles
+	 */
 	app.get("/discord", async (req: any, res: any) => {
 		console.log(req.query);
 		const params = new url.URLSearchParams();
@@ -171,27 +174,6 @@ export function startApp(client: Client) {
 				},
 			}
 		);
-		/* .then(async (result: any) => {
-				console.log(result.data);
-				const user = await axios.get("https://discord.com/api/users/@me", {
-					headers: {
-						Authorization: `Bearer ${result.data.access_token}`,
-					},
-				});
-				console.log(user.data);
-				const guild = await client.guilds.fetch(guild_id);
-				await guild.members.add(user.data.id, {
-					accessToken: result.data.access_token,
-				});
-				res.status(200).send("Works !");
-			})
-			.catch((err: any) => {
-				console.error("Oops, something went wrong:");
-				console.log(err);
-				return res
-					.status(400)
-					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
-			}); */
 		try {
 			const user = await axios.get("https://discord.com/api/users/@me", {
 				headers: {
