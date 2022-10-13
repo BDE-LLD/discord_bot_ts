@@ -5,6 +5,7 @@ require("dotenv").config();
 import express from "express";
 import axios from "axios";
 import http from "http";
+import url from "url";
 import { readDB } from "./auth_manager";
 import { guild_id, auth } from "../config.json";
 import { IUser } from "42.js/dist/structures/user";
@@ -152,13 +153,15 @@ export function startApp(client: Client) {
 
 	app.get("/discord", async (req: any, res: any) => {
 		console.log(req.query);
-		const params = {
-			grant_type: "authorization_code",
-			client_id: process.env.DISCORD_BOT_CLIENT_ID,
-			client_secret: process.env.DISCORD_BOT_CLIENT_SECRET,
-			code: req.query.code,
-			redirect_uri: "https://auth." + process.env.DOMAIN + "/discord",
-		};
+		const params = new url.URLSearchParams();
+		params.append("grant_type", "authorization_code");
+		params.append("client_id", process.env.DISCORD_BOT_CLIENT_ID || "");
+		params.append("client_secret", process.env.DISCORD_BOT_CLIENT_SECRET || "");
+		params.append("code", req.query.code);
+		params.append(
+			"redirect_uri",
+			"https://auth." + process.env.DOMAIN + "/discord"
+		);
 		axios
 			.post("https://discord.com/api/oauth2/token", params, {
 				headers: {
