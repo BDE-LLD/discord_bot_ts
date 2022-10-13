@@ -193,7 +193,6 @@ export function startApp(client: Client) {
 					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
 			}); */
 		try {
-			console.log(res_auth.data);
 			const user = await axios.get("https://discord.com/api/users/@me", {
 				headers: {
 					Authorization: `Bearer ${res_auth.data.access_token}`,
@@ -205,7 +204,7 @@ export function startApp(client: Client) {
 			if (!member) {
 				await guild.members.add(user.data.id, {
 					accessToken: res_auth.data.access_token,
-					roles: [roles.hackathon],
+					// roles: [roles.hackathon],
 				});
 			} else {
 				await member.roles.add(roles.hackathon);
