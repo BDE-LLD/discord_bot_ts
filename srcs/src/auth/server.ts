@@ -169,6 +169,7 @@ export function startApp(client: Client) {
 				console.log("test");
 
 				console.log(result.data);
+				res.status(200).send("Works !");
 			})
 			.catch((err: any) => {
 				console.error("Impossible to transform user's code into token:");
@@ -177,7 +178,6 @@ export function startApp(client: Client) {
 					.status(400)
 					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
 			});
-		res.status(200).send("Works !");
 
 		// const guild = await client.guilds.fetch(guild_id);
 
