@@ -19,8 +19,8 @@ async function start() {
   });
 
   client.once("ready", async () => {
-    //await create_buttons(client);
-    //console.log("Created buttons");
+    await create_buttons(client);
+    console.log("Created buttons");
     await initEvents();
     console.log("Inited events");
     await initInteractions(client);
