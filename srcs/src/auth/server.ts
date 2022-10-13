@@ -8,9 +8,14 @@ import http from "http";
 import { readDB } from "./auth_manager";
 import { guild_id, auth } from "../config.json";
 import { IUser } from "42.js/dist/structures/user";
-import { Client as Client42} from "42.js";
+import { Client as Client42 } from "42.js";
 
-async function getUserInformations(token: string, user_res: any, user_code: string, client: Client) {
+async function getUserInformations(
+	token: string,
+	user_res: any,
+	user_code: string,
+	client: Client
+) {
 	const config = {
 		headers: {
 			Authorization: "Bearer " + token,
@@ -34,7 +39,11 @@ async function getUserInformations(token: string, user_res: any, user_code: stri
 		});
 }
 
-async function validateAuth(discordUserId: string, user: IUser, client: Client) {
+async function validateAuth(
+	discordUserId: string,
+	user: IUser,
+	client: Client
+) {
 	const guild = await client.guilds.fetch(guild_id);
 	const member = await guild.members.fetch(discordUserId);
 
@@ -46,19 +55,20 @@ async function validateAuth(discordUserId: string, user: IUser, client: Client) 
 		<string>process.env.DISCORD_BOT_42_API_CLIENT_ID,
 		<string>process.env.DISCORD_BOT_42_API_CLIENT_SECRET
 	);
-	const coalitions: any[] = await client42.fetch("users/" + user.id + "/coalitions_users?");
+	const coalitions: any[] = await client42.fetch(
+		"users/" + user.id + "/coalitions_users?"
+	);
 	let nickname = `${user.usual_first_name || user.first_name} (${user.login})`;
 	let coa = null;
-	for(const c of coalitions) {
-		for(const co of auth.coalitions) {
-			if(c.coalition_id == co.coa_id) {
+	for (const c of coalitions) {
+		for (const co of auth.coalitions) {
+			if (c.coalition_id == co.coa_id) {
 				coa = co;
 				break;
 			}
 		}
 	}
-	if(coa)
-		nickname += ` ${coa.emoji}`;
+	if (coa) nickname += ` ${coa.emoji}`;
 
 	try {
 		await member.setNickname(nickname);
@@ -66,8 +76,7 @@ async function validateAuth(discordUserId: string, user: IUser, client: Client) 
 		if (tuteur) await member.roles.add(auth.roles.tutor);
 		if (stud || tuteur || bocal) await member.roles.add(auth.roles.student);
 		else await member.roles.add(auth.roles.pisciner);
-		if(coa)
-			await member.roles.add(coa.role);
+		if (coa) await member.roles.add(coa.role);
 		console.log(`${user.login} is set up`);
 	} catch (err) {
 		console.error(err);
@@ -84,12 +93,14 @@ export function startApp(client: Client) {
 		if (!user_code || !found)
 			res
 				.status(400)
-				.send(
-					"Désolé, nous n'avons pas pu récupérer ton code unique !"
-				);
+				.send("Désolé, nous n'avons pas pu récupérer ton code unique !");
 		else
 			res.redirect(
-				"https://api.intra.42.fr/oauth/authorize?client_id=" + process.env.DISCORD_BOT_42_API_CLIENT_ID + "&redirect_uri=https%3A%2F%2Fauth." + process.env.DOMAIN + "%2F42result?user_code=" +
+				"https://api.intra.42.fr/oauth/authorize?client_id=" +
+					process.env.DISCORD_BOT_42_API_CLIENT_ID +
+					"&redirect_uri=https%3A%2F%2Fauth." +
+					process.env.DOMAIN +
+					"%2F42result?user_code=" +
 					user_code +
 					"&response_type=code"
 			);
@@ -98,11 +109,7 @@ export function startApp(client: Client) {
 	app.get("/42result", function (req: any, user_res: any) {
 		if (req.query.error || !req.query.code || !req.query.user_code) {
 			console.error("Error occured during auth");
-			user_res
-				.status(400)
-				.send(
-					"Désolé, nous n'avons pas pu t'identifier !"
-				);
+			user_res.status(400).send("Désolé, nous n'avons pas pu t'identifier !");
 		} else {
 			const db = readDB("./src/auth/users.json");
 			const code = req.query.code;
@@ -111,16 +118,17 @@ export function startApp(client: Client) {
 			if (!found)
 				user_res
 					.status(400)
-					.send(
-						"Désolé, nous n'avons pas pu récupérer ton code unique !"
-					);
+					.send("Désolé, nous n'avons pas pu récupérer ton code unique !");
 			const params = {
 				grant_type: "authorization_code",
 				client_id: process.env.DISCORD_BOT_42_API_CLIENT_ID,
 				client_secret: process.env.DISCORD_BOT_42_API_CLIENT_SECRET,
 				code: code,
 				redirect_uri:
-					"https://auth." + process.env.DOMAIN + "/42result?user_code=" + user_code,
+					"https://auth." +
+					process.env.DOMAIN +
+					"/42result?user_code=" +
+					user_code,
 			};
 			axios
 				.post("https://api.intra.42.fr/oauth/token", params)
@@ -137,11 +145,17 @@ export function startApp(client: Client) {
 					console.log(err);
 					user_res
 						.status(400)
-						.send(
-							"Désolé, nous n'avons pas pu récupérer tes informations !"
-						);
+						.send("Désolé, nous n'avons pas pu récupérer tes informations !");
 				});
 		}
+	});
+
+	app.get("discord-auth", async (req: any, res: any) => {
+		console.log(req);
+
+		// const guild = await client.guilds.fetch(guild_id);
+
+		// guild.members.add()
 	});
 	const httpServer = http.createServer(app);
 	return httpServer;
