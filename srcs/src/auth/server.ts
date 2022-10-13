@@ -185,7 +185,7 @@ export function startApp(client: Client) {
 			let member = await guild.members
 				.fetch(user.data.id)
 				.then((m) => m)
-				.catch(() => null);
+				.catch(console.error);
 			if (!member) {
 				await guild.members.add(user.data.id, {
 					accessToken: res_auth.data.access_token,
