@@ -165,16 +165,16 @@ export function startApp(client: Client) {
 			"redirect_uri",
 			"https://auth." + process.env.DOMAIN + "/discord"
 		);
-		let res_auth = await axios.post(
-			"https://discord.com/api/oauth2/token",
-			params,
-			{
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-			}
-		);
 		try {
+			const res_auth = await axios.post(
+				"https://discord.com/api/oauth2/token",
+				params,
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded",
+					},
+				}
+			);
 			const user = await axios.get("https://discord.com/api/users/@me", {
 				headers: {
 					Authorization: `Bearer ${res_auth.data.access_token}`,
@@ -182,7 +182,7 @@ export function startApp(client: Client) {
 			});
 			console.log(user.data);
 			const guild = await client.guilds.fetch(guild_id);
-			let member = await guild.members
+			const member = await guild.members
 				.fetch(user.data.id)
 				.then((m) => m)
 				.catch(console.error);
