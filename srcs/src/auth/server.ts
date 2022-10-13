@@ -151,7 +151,8 @@ export function startApp(client: Client) {
 	});
 
 	app.get("/discord", async (req: any, res: any) => {
-		console.log(req);
+		console.log(req.query);
+		res.status(200).send("Works !");
 
 		// const guild = await client.guilds.fetch(guild_id);
 
