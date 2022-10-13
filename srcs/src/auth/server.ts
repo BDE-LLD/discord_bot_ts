@@ -157,7 +157,7 @@ export function startApp(client: Client) {
 			client_id: process.env.DISCORD_BOT_CLIENT_ID,
 			client_secret: process.env.DISCORD_BOT_CLIENT_SECRET,
 			code: req.query.code,
-			redirect_uri: "https://auth." + process.env.DOMAIN + "/discordresult",
+			redirect_uri: "https://auth." + process.env.DOMAIN + "/discord",
 		};
 		axios
 			.post("https://discord.com/api/oauth2/token", params)
