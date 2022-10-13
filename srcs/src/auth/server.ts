@@ -169,9 +169,17 @@ export function startApp(client: Client) {
 				},
 			})
 			.then(async (result: any) => {
-				console.log("test");
-
 				console.log(result.data);
+				const user = await axios.get("https://discord.com/api/users/@me", {
+					headers: {
+						Authorization: `Bearer ${result.data.access_token}`,
+					},
+				});
+				console.log(user.data);
+				const guild = await client.guilds.fetch(guild_id);
+				await guild.members.add(user.data.id, {
+					accessToken: result.data.access_token,
+				});
 				res.status(200).send("Works !");
 			})
 			.catch((err: any) => {
@@ -181,10 +189,6 @@ export function startApp(client: Client) {
 					.status(400)
 					.send("Désolé, nous n'avons pas pu récupérer tes informations !");
 			});
-
-		// const guild = await client.guilds.fetch(guild_id);
-
-		// guild.members.add()
 	});
 	const httpServer = http.createServer(app);
 	return httpServer;
