@@ -3,7 +3,7 @@ import { Client } from "discordx";
 import { auth } from "./config.json";
 
 export async function create_buttons(client: Client) {
-    const channel = await client.channels.fetch(auth.auth_channel);
+    /*const channel = await client.channels.fetch(auth.auth_channel);
     if (channel && channel.isTextBased()) {
         const message = await channel.messages.fetch({ limit: 1 });
         if (message.size != 0) {
@@ -25,5 +25,5 @@ export async function create_buttons(client: Client) {
     }
     else {
         console.log("Impossible to init auth button because channel is not valid");
-    }
+    }*/
 }
