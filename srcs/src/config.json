@@ -1,6 +1,6 @@
 {
-	"guild_id": "1010975800255860819",
-	"rules_channel_id": "1010976074655608923",
+	"guild_id": "953954460047147008",
+	"rules_channel_id": "954027558121394176",
 	"roles": {
 		"bde": "954023542138241084",
 		"ca": "963125932237922304",
@@ -9,43 +9,84 @@
 		"ski": "1047867788343136357"
 	},
 	"auth": {
-		"auth_channel": "1030088763810005032",
+		"auth_channel": "1020758875227562075",
 		"roles": {
-			"student": "1030088015357419570",
-			"staff": "1030088049721352202",
-			"tutor": "1030088074350301184",
-			"pisciner": "1030088099763597342",
-			"extern": "1030088129195036672"
+			"student": "954063445634985984",
+			"staff": "960464782132142151",
+			"tutor": "960464388177940540",
+			"pisciner": "1020758434741756065",
+			"extern": "954026460597850213"
 		},
 		"coalitions": [
 			{
 				"coa_id": 47,
-				"role": "1030088214398107679",
+				"role": "1020758158882386000",
 				"emoji": "🟠"
 			},
 			{
 				"coa_id": 46,
-				"role": "1030088296598085734",
+				"role": "1020758231498379285",
 				"emoji": "🟢"
 			},
 			{
 				"coa_id": 45,
-				"role": "1030088233897439243",
+				"role": "1020758377774723093",
 				"emoji": "🔵"
 			},
 			{
 				"coa_id": 48,
-				"role": "1030088251161198643",
+				"role": "1020758313295679609",
 				"emoji": "🟣"
 			}
 		]
 	},
 	"auto_reac": {
-		"disabled_channels": ["1010995945699287090"],
+		"disabled_channels": [
+			"961236728037933117",
+			"961969125779963914",
+			"961952497705054229"
+		],
 		"reactions": [
 			{
-				"emoji_type": "unicode",
-				"emoji": "thumbup",
+				"emoji_type": "custom",
+				"emoji": "abeer",
+				"triggered_by_mention": false,
+				"keywords": [
+					"beer",
+					"ipa",
+					"pils",
+					"bière",
+					"ale",
+					"bibine",
+					"boîte",
+					"bock",
+					"boisson",
+					"caisse",
+					"cénotaphe",
+					"cervoise",
+					"chope",
+					"faro",
+					"ginger",
+					"gueuze",
+					"guinness",
+					"kriek",
+					"lambic",
+					"litre",
+					"pale-ale",
+					"porter",
+					"saké",
+					"sépulcre",
+					"sarcophage",
+					"stout",
+					"phéno",
+					"pheno",
+					"phénos",
+					"phenos"
+				]
+			},
+			{
+				"emoji_type": "custom",
+				"emoji": "alld",
 				"triggered_by_mention": true,
 				"keywords": ["lld"]
 			}
