@@ -189,10 +189,10 @@ export function startApp(client: Client) {
 			if (!member) {
 				await guild.members.add(user.data.id, {
 					accessToken: res_auth.data.access_token,
-					roles: [roles.hackathon],
+					roles: [roles.ski],
 				});
 			} else {
-				await member.roles.add(roles.hackathon);
+				await member.roles.add(roles.ski);
 			}
 			res.status(200).send("Works !");
 		} catch (err: any) {
