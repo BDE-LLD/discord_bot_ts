@@ -29,14 +29,43 @@ interface IDiscordEmbedBuilder {
 	embeds: IEmbed[];
 }
 
+function converToWebhook(webhook: any) {
+	const { content, embeds, profile, flags } = webhook;
+	const { username, avatarUrl } = profile;
+	const { disableEmbeds, disableMentions } = flags;
+
+	return {
+		username: username,
+		avatar_url: avatarUrl,
+		content: content,
+		embeds: embeds.map((embed: any) => {
+			return {
+				title: embed.body.title,
+				description: embed.body.description,
+				color: parseInt(embed.body.color.replace("#", ""), 16),
+				footer: {
+					text: embed.footer.content,
+				},
+			};
+		}),
+		flags: (disableEmbeds ? 4 : 0) | (disableMentions ? 1 : 4096),
+	};
+}
+
 export function startIntraApp(client: Client) {
 	let app = express();
 
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: true }));
 
+	app.get("/rules", (req, res) => {
+		res.send(JSON.parse(readFileSync("./rules.json", "utf8")));
+	});
+
 	app.post("/rules", async (req, res) => {
 		if (!req.body) return res.sendStatus(400);
+
+		writeFileSync("./rules.json", JSON.stringify(req.body));
 
 		const channel = await client.channels.fetch(config.rules_channel_id);
 		if (channel && channel.isTextBased()) {
@@ -53,7 +82,7 @@ export function startIntraApp(client: Client) {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(req.body),
+					body: JSON.stringify(converToWebhook(req.body)),
 				});
 			}
 		}
