@@ -3,6 +3,7 @@ import express from "express";
 import http from "http";
 const { readFileSync, writeFileSync } = require("node:fs");
 import config from "./config.json";
+const fetch = require("node-fetch2");
 
 interface IEmbed {
 	id: number;

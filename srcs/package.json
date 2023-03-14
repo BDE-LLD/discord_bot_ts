@@ -20,6 +20,7 @@
 		"express": "^4.18.1",
 		"http": "^0.0.1-security",
 		"moment": "^2.29.4",
+		"node-fetch2": "^1.6.3",
 		"reflect-metadata": "^0.1.13",
 		"typescript": "^4.9.5"
 	},
