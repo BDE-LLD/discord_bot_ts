@@ -49,7 +49,7 @@ function converToWebhook(webhook: any) {
 				},
 			};
 		}),
-		flags: (disableEmbeds ? 4 : 0) | (disableMentions ? 1 : 4096),
+		flags: (disableEmbeds ? 4 : 0) | (disableMentions ? 4096 : 0),
 	};
 }
 
