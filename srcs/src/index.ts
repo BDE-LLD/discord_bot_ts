@@ -40,7 +40,7 @@ async function start() {
 
 	const httpServer = startApp(client);
 	await client.login(token || "");
-	const port = 3001;
+	const port = 3000;
 	httpServer.listen(port, () => {
 		console.log("Auth server running on port " + port);
 	});
