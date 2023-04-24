@@ -15,7 +15,7 @@
 		"42.js": "^1.1.12",
 		"axios": "^0.27.2",
 		"discord.js": "^14.2.0",
-		"discordx": "^11.1.9",
+		"discordx": "^11.7.6",
 		"dotenv": "^16.0.1",
 		"express": "^4.18.1",
 		"http": "^0.0.1-security",

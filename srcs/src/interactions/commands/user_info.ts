@@ -1,4 +1,8 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	CommandInteraction,
+	EmbedBuilder,
+} from "discord.js";
 import { Client, Discord, Slash, SlashOption } from "discordx";
 import { Client as Client42 } from "42.js";
 import { IUser } from "42.js/dist/structures/user";
@@ -15,6 +19,7 @@ class UserInfo {
 			name: "login",
 			description: "User's login",
 			required: true,
+			type: ApplicationCommandOptionType.String,
 		})
 		login: string,
 		interaction: CommandInteraction
@@ -44,12 +49,12 @@ class UserInfo {
 			embed
 				.setAuthor({
 					name: user.login,
-					iconURL: user.image_url,
+					iconURL: user.image.link,
 					url: "https://profile.intra.42.fr/users/" + user.login,
 				})
 				.setTitle(`${user.login}'s infos`)
 				.setURL("https://profile.intra.42.fr/users/" + user.login)
-				.setThumbnail(user.image_url)
+				.setThumbnail(user.image.link)
 				.setTimestamp()
 				.setDescription(user.displayname)
 				.addFields(

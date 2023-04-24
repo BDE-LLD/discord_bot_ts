@@ -59,7 +59,9 @@ async function validateAuth(
 	const coalitions: any[] = await client42.fetch(
 		"users/" + user.id + "/coalitions_users?"
 	);
-	let nickname = `${user.usual_first_name || user.first_name} (${user.login})`;
+	let nickname = `${user.usual_first_name || user.first_name} (${
+		user.login
+	})`;
 	let coa = null;
 	for (const c of coalitions) {
 		for (const co of auth.coalitions) {
@@ -92,9 +94,9 @@ export function startApp(client: Client) {
 		const user_code = req.query.user_code;
 		const found = db.some((o: any) => o.code === user_code);
 		if (!user_code || !found)
-			res
-				.status(400)
-				.send("Désolé, nous n'avons pas pu récupérer ton code unique !");
+			res.status(400).send(
+				"Désolé, nous n'avons pas pu récupérer ton code unique !"
+			);
 		else
 			res.redirect(
 				"https://api.intra.42.fr/oauth/authorize?client_id=" +
@@ -110,7 +112,9 @@ export function startApp(client: Client) {
 	app.get("/42result", function (req: any, user_res: any) {
 		if (req.query.error || !req.query.code || !req.query.user_code) {
 			console.error("Error occured during auth");
-			user_res.status(400).send("Désolé, nous n'avons pas pu t'identifier !");
+			user_res
+				.status(400)
+				.send("Désolé, nous n'avons pas pu t'identifier !");
 		} else {
 			const db = readDB("./src/auth/users.json");
 			const code = req.query.code;
@@ -119,7 +123,9 @@ export function startApp(client: Client) {
 			if (!found)
 				user_res
 					.status(400)
-					.send("Désolé, nous n'avons pas pu récupérer ton code unique !");
+					.send(
+						"Désolé, nous n'avons pas pu récupérer ton code unique !"
+					);
 			const params = {
 				grant_type: "authorization_code",
 				client_id: process.env.DISCORD_BOT_42_API_CLIENT_ID,
@@ -142,11 +148,15 @@ export function startApp(client: Client) {
 					);
 				})
 				.catch((err: any) => {
-					console.error("Impossible to transform user's code into token:");
+					console.error(
+						"Impossible to transform user's code into token:"
+					);
 					console.log(err);
 					user_res
 						.status(400)
-						.send("Désolé, nous n'avons pas pu récupérer tes informations !");
+						.send(
+							"Désolé, nous n'avons pas pu récupérer tes informations !"
+						);
 				});
 		}
 	});
@@ -154,55 +164,55 @@ export function startApp(client: Client) {
 	/**
 	 * Use oauth2 of Discord to get a user, join it to the server and / or set up its roles
 	 */
-	app.get("/discord", async (req: any, res: any) => {
-		console.log(req.query);
-		const params = new url.URLSearchParams();
-		params.append("grant_type", "authorization_code");
-		params.append("client_id", process.env.DISCORD_BOT_CLIENT_ID || "");
-		params.append("client_secret", process.env.DISCORD_BOT_CLIENT_SECRET || "");
-		params.append("code", req.query.code);
-		params.append(
-			"redirect_uri",
-			"https://auth." + process.env.DOMAIN + "/discord"
-		);
-		try {
-			const res_auth = await axios.post(
-				"https://discord.com/api/oauth2/token",
-				params,
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded",
-					},
-				}
-			);
-			const user = await axios.get("https://discord.com/api/users/@me", {
-				headers: {
-					Authorization: `Bearer ${res_auth.data.access_token}`,
-				},
-			});
-			console.log(user.data);
-			const guild = await client.guilds.fetch(guild_id);
-			const member = await guild.members
-				.fetch(user.data.id)
-				.then((m) => m)
-				.catch(console.error);
-			if (!member) {
-				await guild.members.add(user.data.id, {
-					accessToken: res_auth.data.access_token,
-					roles: [roles.ski],
-				});
-			} else {
-				await member.roles.add(roles.ski);
-			}
-			res.status(200).send("Works !");
-		} catch (err: any) {
-			console.error("Oops, something went wrong:");
-			console.error(err);
-			return res
-				.status(400)
-				.send("Désolé, nous n'avons pas pu récupérer tes informations !");
-		}
-	});
+	// app.get("/discord", async (req: any, res: any) => {
+	// 	console.log(req.query);
+	// 	const params = new url.URLSearchParams();
+	// 	params.append("grant_type", "authorization_code");
+	// 	params.append("client_id", process.env.DISCORD_BOT_CLIENT_ID || "");
+	// 	params.append("client_secret", process.env.DISCORD_BOT_CLIENT_SECRET || "");
+	// 	params.append("code", req.query.code);
+	// 	params.append(
+	// 		"redirect_uri",
+	// 		"https://auth." + process.env.DOMAIN + "/discord"
+	// 	);
+	// 	try {
+	// 		const res_auth = await axios.post(
+	// 			"https://discord.com/api/oauth2/token",
+	// 			params,
+	// 			{
+	// 				headers: {
+	// 					"Content-Type": "application/x-www-form-urlencoded",
+	// 				},
+	// 			}
+	// 		);
+	// 		const user = await axios.get("https://discord.com/api/users/@me", {
+	// 			headers: {
+	// 				Authorization: `Bearer ${res_auth.data.access_token}`,
+	// 			},
+	// 		});
+	// 		console.log(user.data);
+	// 		const guild = await client.guilds.fetch(guild_id);
+	// 		const member = await guild.members
+	// 			.fetch(user.data.id)
+	// 			.then((m) => m)
+	// 			.catch(console.error);
+	// 		if (!member) {
+	// 			await guild.members.add(user.data.id, {
+	// 				accessToken: res_auth.data.access_token,
+	// 				roles: [roles.ski],
+	// 			});
+	// 		} else {
+	// 			await member.roles.add(roles.ski);
+	// 		}
+	// 		res.status(200).send("Works !");
+	// 	} catch (err: any) {
+	// 		console.error("Oops, something went wrong:");
+	// 		console.error(err);
+	// 		return res
+	// 			.status(400)
+	// 			.send("Désolé, nous n'avons pas pu récupérer tes informations !");
+	// 	}
+	// });
 	const httpServer = http.createServer(app);
 	return httpServer;
 }
